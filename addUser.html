@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>add a user</title>
+</head>
+<body>
+    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input></input>
+    
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDwwnUH4gT_eAlAo-_xa8-Faz_xOKoJlH8",
+      authDomain: "libraryproject-7bdac.firebaseapp.com",
+      databaseURL: "https://libraryproject-7bdac-default-rtdb.firebaseio.com",
+      projectId: "libraryproject-7bdac",
+      storageBucket: "libraryproject-7bdac.appspot.com",
+      messagingSenderId: "338262276078",
+      appId: "1:338262276078:web:53a9f14d10ea9e0d3b00ff"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    import {getDatabase, ref, set, child, update, remove}
+    from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+
+    const db = getDatabase();
+
+    //ref
+    var namebox = document.getElementById('name');
+    var bookname = document.getElementById('bookname')
+    var numofdays = document.getElementById('daystaken')
+    var moneytake = document.getElementById('cost')
+    var NameCode = document.getElementById('namecode');
+
+
+    var Insbtn = document.getElementById('insbtn')
+   
+
+    //inset data function
+
+    function insertData(){
+        set(ref(db,"books/" + NameCode.value),{
+            nameofissuer:   namebox.value,
+            namwofthebook: bookname.value,
+            numofdaysbooktaken: numofdays.value,
+            moneytaken: moneytake.value,
+            Namecode: NameCode.value
+        })
+        .then(()=>{
+            alert('data added')
+        })
+        .catch((error)=>{
+            alert('unsucsessful, error' + error)
+        });
+    }
+
+
+
+  </script>
+</body>
+</html>

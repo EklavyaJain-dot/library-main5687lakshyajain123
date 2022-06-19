@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rent</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+</head>
+<body>
+<br><br><br>
+
+&nbsp;&nbsp;namecode&nbsp;&nbsp;&nbsp;<input id="namecode" type="number"></input><br><br>
+&nbsp; &nbsp;Name &nbsp;&nbsp;&nbsp; <input id="name" type="text"><br><br>
+&nbsp;&nbsp;&nbsp;bookname&nbsp;&nbsp;<input id="bookname" type="text" ><br><br>
+&nbsp;&nbsp;issudate&nbsp;&nbsp;<input id="issudate" type="date">
+&nbsp;&nbsp;returndate&nbsp;&nbsp;<input id="returndate" type="date"><br><br>
+&nbsp;&nbsp;submit&nbsp;&nbsp;<input id="submit" type="submit" onclick="calculatedays()"></input><br><br><br>
+&nbsp;&nbsp;&nbsp;<p style="position: absolute; bottom: 71%">days for return : </p>
+<p id="output" style="position: relative; left: 8%;  bottom: 4%;"></p>
+<br><br><br>
+<p style="position: relative; position: absolute">it will cost ₹</p>
+<p id="money" style="position: absolute; left: 6.5%;"></p><br><br><br><br>
+&nbsp;&nbsp;daystaken&nbsp;&nbsp;<input id="daystaken" type="number"></input><br><br>
+&nbsp;&nbsp;it will cost&nbsp;&nbsp;<input id="cost" type="number"></input>
+<br><br><br>
+<button id="insbtn">insert</button>
+
+
+<script>
+    function calculatedays(){
+        var IssuDate = document.getElementById('issudate').value;
+        var ReturnDate = document.getElementById('returndate').value;
+        const Dateone = new Date(IssuDate);
+        const DateTwo = new Date(ReturnDate);
+        const Time = Math.abs(DateTwo - Dateone);
+        const days = Math.ceil(Time / (1000 * 60 * 60 * 24));
+        document.getElementById('output').innerHTML=days;
+        document.getElementById('money').innerHTML=days*13;
+    }
+</script>
+
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDwwnUH4gT_eAlAo-_xa8-Faz_xOKoJlH8",
+      authDomain: "libraryproject-7bdac.firebaseapp.com",
+      databaseURL: "https://libraryproject-7bdac-default-rtdb.firebaseio.com",
+      projectId: "libraryproject-7bdac",
+      storageBucket: "libraryproject-7bdac.appspot.com",
+      messagingSenderId: "338262276078",
+      appId: "1:338262276078:web:53a9f14d10ea9e0d3b00ff"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    import {getDatabase, ref, set, child, update, remove}
+    from "https://www.gstatic.com/firebasejs/9.8.3/firebase-database.js";
+
+    const db = getDatabase();
+
+    //ref
+    var namebox = document.getElementById('name');
+    var bookname = document.getElementById('bookname')
+    var numofdays = document.getElementById('daystaken')
+    var moneytake = document.getElementById('cost')
+    var NameCode = document.getElementById('namecode');
+
+
+    var Insbtn = document.getElementById('insbtn')
+   
+
+    //inset data function
+
+    function insertData(){
+        set(ref(db,"books/" + NameCode.value),{
+            nameofissuer:   namebox.value,
+            namwofthebook: bookname.value,
+            numofdaysbooktaken: numofdays.value,
+            moneytaken: moneytake.value,
+            Namecode: NameCode.value
+        })
+        .then(()=>{
+            alert('data added')
+        })
+        .catch((error)=>{
+            alert('unsucsessful, error' + error)
+        });
+    }
+
+
+    Insbtn.addEventListener('click', insertData);
+
+
+  </script>
+</body>
+</html>
